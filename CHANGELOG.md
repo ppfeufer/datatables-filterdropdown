@@ -48,6 +48,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [0.0.2] - 2026-08-31
+
 ### Added
 
 - Defaults array
@@ -65,6 +67,7 @@ Section Order:
 <!-- Links to be updated upon release -->
 
 [0.0.1]: https://github.com/ppfeufer/datatables-filterdropdown/commits/v0.0.1 "v0.0.1"
-[in development]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.1...HEAD "In Development"
+[0.0.2]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.1...v0.0.2 "v0.0.2"
+[in development]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.2...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
