@@ -1,7 +1,7 @@
 {
     "author": "Peter Pfeufer",
     "name": "@ppfeufer/datatables-filterdropdown",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "DataTables Bootstrap Filter Dropdown Plugin. This plugin adds a filter dropdown to each column of a DataTable, allowing users to filter the table based on the unique values in that column.",
     "main": "dist/datatables-filterdropdown.js",
     "license": "GPL-3.0-or-later",

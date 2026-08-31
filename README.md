@@ -2,10 +2,10 @@
 
 DataTables Bootstrap Filter Dropdown is a plugin for [DataTables](https://datatables.net/) that adds a dropdown element for selected columns to a DataTable, allowing the user to filter the table to only show rows containing a certain value.
 
-![GitHub Release](https://img.shields.io/github/v/release/ppfeufer/datatables-filterdropdown?label=Version)
-![jQuery](https://img.shields.io/badge/jQuery-3_%7C_4-blue)
-![DataTables](https://img.shields.io/badge/DataTables-1_%7C_2_%7C_3-blue)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5-blue)
+![Version](https://img.shields.io/github/v/release/ppfeufer/datatables-filterdropdown?label=Version "Version")
+![Supported jQuery Versions](https://img.shields.io/badge/jQuery-3_%7C_4-blue "Supported jQuery Versions")
+![Supported DataTables Versions](https://img.shields.io/badge/DataTables-1_%7C_2_%7C_3-blue "Supported DataTables Versions")
+![Supported Bootstrap Versions](https://img.shields.io/badge/Bootstrap-5-blue "Supported Bootstrap Versions")
 
 ______________________________________________________________________
 
@@ -55,7 +55,7 @@ Dropdown Filter in action:
 
 ## Usage<a name="usage"></a>
 
-- Download the latest release from [GitHub](https://github.com/ppfeufer/datatables-filterdropdown)
+- Download the latest release from [GitHub](https://github.com/ppfeufer/datatables-filterdropdown/releases/latest)
 - Include`datatables-filterdropdown.min.js` into your HTML file, after the DataTables JS
 - Add a filterDropDown section in the DataTables initialization object
 
