@@ -48,7 +48,12 @@ $(document).ready(() => {
         const hasGlobalDT = typeof DataTable !== 'undefined' && DataTable;
 
         return {
-            // Return a DataTables API instance created from settings object, supports both jQuery and global DataTable APIs
+            /**
+             * Get the DataTables API instance from the settings object, supporting both jQuery and global DataTable usage patterns.
+             *
+             * @param settings
+             * @returns {*|null}
+             */
             apiFromSettings: (settings) => {
                 // Global/Native DataTables API
                 if (hasGlobalDT && DataTable.Api) {
@@ -65,7 +70,12 @@ $(document).ready(() => {
                 return null;
             },
 
-            // Escape regex util
+            /**
+             * Escape a string for use in a regular expression, supporting both jQuery and global DataTable usage patterns.
+             *
+             * @param str
+             * @returns {string|*|string|string}
+             */
             escapeRegex: (str) => {
                 if (hasGlobalDT && DataTable.util && DataTable.util.escapeRegex) {
                     return DataTable.util.escapeRegex(str);
@@ -79,7 +89,11 @@ $(document).ready(() => {
                 return str ? String(str).replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') : '';
             },
 
-            // Get version string (if exposed)
+            /**
+             * Get the version of DataTables, supporting both jQuery and global DataTable usage patterns.
+             *
+             * @returns {*|null|string}
+             */
             version: () => {
                 if (hasJQueryDT && jQuery.fn.dataTable && jQuery.fn.dataTable.version) {
                     return jQuery.fn.dataTable.version;
@@ -92,7 +106,11 @@ $(document).ready(() => {
                 return null;
             },
 
-            // Check if it's DataTables 2
+            /**
+             * Check if the DataTables version is 2 or higher, supporting both jQuery and global DataTable usage patterns.
+             *
+             * @returns {boolean|null}
+             */
             isV2: () => {
                 const v = (typeof DataTable !== 'undefined' && DataTable && DataTable.version) || (typeof jQuery !== 'undefined' && jQuery.fn && jQuery.fn.dataTable && jQuery.fn.dataTable.version);
 
@@ -127,7 +145,11 @@ $(document).ready(() => {
         }
 
         // Try to find a matching option by comparing DataTables escaped option -> ^escaped$
-        const options = $select.find('option').map(function () { return $(this).val(); }).get();
+        const options = $select.find('option').map((_, option) => {
+            void _; // Void unused variable
+
+            return $(option).val();
+        }).get();
 
         for (let i = 0; i < options.length; i++) {
             const opt = options[i];

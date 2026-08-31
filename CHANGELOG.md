@@ -52,6 +52,10 @@ Section Order:
 
 - Defaults array
 
+### Changed
+
+- Converted the last legacy function to a modern arrow function
+
 ## [0.0.1] - 2026-08-31
 
 ### Changed
