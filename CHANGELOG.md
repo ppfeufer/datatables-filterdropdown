@@ -2,51 +2,58 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
-## [Unreleased] - yyyy-mm-dd
+<!--
+GitHub MD Syntax:
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
 
-## [0.5.0] - 2025-01-25
+Highlighting:
+https://docs.github.com/assets/cb-41128/mw-1440/images/help/writing/alerts-rendered.webp
+
+> [!NOTE]
+>
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+>
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]
+>
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]
+>
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+>
+> Advised about risks or negative outcomes of certain actions.
+-->
+
+## [In Development] - Unreleased
+
+<!--
+Section Order:
 
 ### Added
+### Fixed
+### Changed
+### Deprecated
+### Removed
+### Security
+### Miscellaneous
+-->
 
-- Support for Bootstrap 5 (Big thanks to @ppfeufer for contributing this feature!)
+<!-- Your changes go here -->
 
 ### Changed
 
-- Updated tests to newest versions of 3rd party libraries
-- Improved documentation
+- Modernized Bootstrap Only version
 
-## [0.4.0] - 2020-01-13
+<!-- Links to be updated upon release -->
 
-### Added
-
-- Support for server-side processing
-
-## [0.3.0] - 2018-04-29
-
-### Added
-
-- Added option to turn-off auto-sizing. useful if table is rendered on hidden tab
-
-## [0.2.1] - 2017-11-27
-
-### Fixed
-
-- Auto-Width of Select was too small with Chrome
-
-## [0.2.0] - 2017-09-16
-
-### Change
-
-- removed cssStyle & cssClass parameter and replaced with generated classes for wrapper and selects renamed titleOverride to title
-- added label parameter to customized label text
-- added automatic max-width based on title size
-- added optional maxWidth to override / turn-off the automatic
-
-## [0.1.0] - 2017-08-29
-
-### Added
-
-- Initial release
+[in development]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.1...HEAD "In Development"
+[keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
+[semantic versioning]: http://semver.org/ "Semantic Versioning"

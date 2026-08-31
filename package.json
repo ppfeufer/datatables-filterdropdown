@@ -1,0 +1,42 @@
+{
+    "author": "Peter Pfeufer",
+    "name": "@ppfeufer/datatables-filterdropdown",
+    "version": "0.0.1",
+    "description": "DataTables Bootstrap Filter Dropdown Plugin. This plugin adds a filter dropdown to each column of a DataTable, allowing users to filter the table based on the unique values in that column.",
+    "main": "dist/datatables-filterdropdown.js",
+    "license": "GPL-3.0-or-later",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ppfeufer/datatables-filterdropdown"
+    },
+    "keywords": [
+        "datatables",
+        "filter",
+        "dropdown"
+    ],
+    "bugs": {
+        "url": "https://github.com/ppfeufer/datatables-filterdropdown/issues"
+    },
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.4.1",
+        "ev-emitter": "^2.1.2",
+        "get-size": "^3.0.0",
+        "globals": "^17.6.0",
+        "jquery": "^4.0.0",
+        "jquery-bridget": "^3.0.1",
+        "outlayer": "^2.1.1",
+        "terser": "^5.48.0"
+    },
+    "scripts": {
+        "copy:js": "mkdir -p dist && cp src/datatables-filterdropdown.js dist/datatables-filterdropdown.js",
+        "copy:sources": "npm run copy:js",
+        "build": "npm run copy:sources && npm run minify",
+        "lint": "eslint --config eslint.config.js --ext .js --ignore-pattern '**/*.min.js' --ignore-pattern 'dist/**' --debug",
+        "minify": "terser dist/datatables-filterdropdown.js -o dist/datatables-filterdropdown.min.js --source-map \"base='dist/',url='datatables-filterdropdown.min.js.map'\" --compress reduce_vars=false --mangle --format quote_style=1"
+    }
+}

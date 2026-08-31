@@ -1,8 +1,7 @@
-*/__pycache__/*
-*.pyc
-*.log
-*.tmp
-Temp/
-venv/
-settings.json
-launch.json
+/node_modules/
+/.make/config-overrides.ini
+/datatables-filterdropdown/
+/datatables-filterdropdown*.zip
+/src/**/*.min.js
+/src/**/*.min.js.map
+/src/test/js/
