@@ -22,6 +22,21 @@
 $(document).ready(() => {
     'use strict';
 
+    // Default settings for the filterDropDown plugin
+    const defaults = {
+        filterDef: {
+            ajax: null,
+            bootstrapVersion: 5,
+            columns: [],
+            labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
+        },
+        columnDef: {
+            labelDropdownAll: 'All', // Please set this explicitly, so it can be translated
+            maxWidth: null,
+            title: null
+        }
+    };
+
     /**
      * DataTables compatibility helpers
      * Provides a unified way to access DataTables API and utilities, supporting both jQuery and global DataTable usage patterns, as well as version checks.
@@ -93,7 +108,7 @@ $(document).ready(() => {
     })();
 
     /**
-     * et the select UI from the column's current search (handles stateSave restore)
+     * Set the select UI from the column's current search (handles stateSave restore)
      *
      * @param select
      * @param column
@@ -149,17 +164,10 @@ $(document).ready(() => {
      * @returns {{columns: Array, columnsIdxList: Array, bootstrapVersion: number,ajax: null, labelFilter: string}}
      */
     const parseInitArray = (initArray) => {
-        /**
-         * Default filter definition
-         *
-         * @type {{columns: Array, columnsIdxList: Array, bootstrapVersion: number, ajax: null, labelFilter: string}}
-         */
+        // Start with a copy of the default filter definition
         const filterDef = {
-            columns: [],
-            columnsIdxList: [],
-            bootstrapVersion: 5,
-            ajax: null,
-            labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
+            ...defaults.filterDef,
+            columnsIdxList: [] // Initialize columnsIdxList as an empty array
         };
 
         // Set filter properties if they have been defined otherwise the defaults will be used
@@ -182,11 +190,8 @@ $(document).ready(() => {
                     // Initialize column
                     const idx = initColumn.idx;
 
-                    filterDef.columns[idx] = {
-                        title: null,
-                        maxWidth: null,
-                        labelDropdownAll: 'All' // Please set this explicitly, so it can be translated
-                    };
+                    // Start with a copy of the default column definition
+                    filterDef.columns[idx] = {...defaults.columnDef};
 
                     // Add to a list of indices in the same order they appear in the init array
                     filterDef.columnsIdxList.push(idx);
