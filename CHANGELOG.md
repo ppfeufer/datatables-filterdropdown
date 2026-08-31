@@ -48,6 +48,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Added
+
+- Defaults array
+
 ## [0.0.1] - 2026-08-31
 
 ### Changed
