@@ -22,19 +22,27 @@
 $(document).ready(() => {
     'use strict';
 
-    // Default settings for the filterDropDown plugin
-    const defaults = {
-        filterDef: {
-            ajax: null,
-            bootstrapVersion: 5,
-            columns: [],
-            labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
-        },
-        columnDef: {
-            labelDropdownAll: 'All', // Please set this explicitly, so it can be translated
-            maxWidth: null,
-            title: null
-        }
+    /**
+     * Default settings for the filterDropDown plugin.
+     * These defaults can be overridden by providing a custom initialization object when initializing the DataTable.
+     *
+     * @type {function(): {filterDef: {ajax: null, bootstrapVersion: number, columns: [], labelFilter: string}, columnDef: {labelDropdownAll: string, maxWidth: null, title: null}}}
+     * @private
+     */
+    const _defaults = () => {
+        return {
+            filterDef: {
+                ajax: null,
+                bootstrapVersion: 5,
+                columns: [],
+                labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
+            },
+            columnDef: {
+                labelDropdownAll: 'All', // Please set this explicitly, so it can be translated
+                maxWidth: null,
+                title: null
+            }
+        };
     };
 
     /**
@@ -188,7 +196,7 @@ $(document).ready(() => {
     const parseInitArray = (initArray) => {
         // Start with a copy of the default filter definition
         const filterDef = {
-            ...defaults.filterDef,
+            ..._defaults().filterDef,
             columnsIdxList: [] // Initialize columnsIdxList as an empty array
         };
 
@@ -213,7 +221,7 @@ $(document).ready(() => {
                     const idx = initColumn.idx;
 
                     // Start with a copy of the default column definition
-                    filterDef.columns[idx] = {...defaults.columnDef};
+                    filterDef.columns[idx] = {..._defaults().columnDef};
 
                     // Add to a list of indices in the same order they appear in the init array
                     filterDef.columnsIdxList.push(idx);
