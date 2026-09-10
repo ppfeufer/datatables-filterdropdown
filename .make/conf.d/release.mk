@@ -16,10 +16,11 @@ prepare-release:
 	# Update the version in package.json and rebuild node modules \
 	sed -i -E "\|\"version\"\: |s|\"\: .*|\"\: \"$$new_version\",|g" package.json; \
 	rm -rf node_modules; \
-	rm package-lock.json; \
+#	rm package-lock.json; \
 	npm install; \
 	# Update the version in the main JS file and build the JS files \
-	sed -i -E "\|\* @version |s|@version .*|@version $$new_version|g" src/masonry.js; \
+	sed -i -E "\|\* @version |s|@version .*|@version $$new_version|g" src/datatables-filterdropdown.js; \
+	sed -i -E "\|const version = |s|const version = .*|const version = '$$new_version';|g" src/datatables-filterdropdown.js; \
 	make build; \
 	if [[ $$new_version =~ (alpha|beta) ]]; then \
 		echo "$(TEXT_COLOR_RED)$(TEXT_BOLD)Pre-release$(TEXT_RESET) version detected!"; \
@@ -35,7 +36,7 @@ prepare-release:
 .PHONY: release-archive
 release-archive:
 	@echo "Creating a new release archive …"; \
-	version=$$(sed -n '1,/\*\//p' dist/masonry.js 2>/dev/null | grep -m1 -oP '@version\s+\K\S+' || true); \
+	version=$$(sed -n '1,/\*\//p' dist/datatables-filterdropdown.js 2>/dev/null | grep -m1 -oP '@version\s+\K\S+' || true); \
 	if [ -z "$$version" ]; then \
 		# fall back to package.json version if not found in the JS file; try to read "version" value \
 		version=$$(grep -m1 -oP '"version"\s*:\s*"\K[^"]+' package.json 2>/dev/null || echo "unknown"); \
