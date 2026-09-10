@@ -52,6 +52,7 @@ Section Order:
 
 - Provide defaults as function instead of an object. This seems a bit more elegant and
   allows us to play more dynamically with the defaults if needed in the future.
+- Make it a proper DataTables Extension
 
 ## [0.0.2] - 2026-08-31
 
