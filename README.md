@@ -24,7 +24,7 @@ ______________________________________________________________________
       - [Examples](#examples)
     - [Error Handling](#error-handling)
 - [Configuration Options](#configuration-options)
-- [Dependencies](#dependencies)
+- [Supported Library Versions](#supported-library-versions)
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [I have a column with HTML-styled data, and the option list of its dropdown still contains parts of the HTML. How do I filter by the plain value only?](#i-have-a-column-with-html-styled-data-and-the-option-list-of-its-dropdown-still-contains-parts-of-the-html-how-do-i-filter-by-the-plain-value-only)
 
@@ -169,19 +169,19 @@ in the browser console.
 
 All configuration options must be set in the `filterDropDown` section of the initialization array for your respective DataTable.
 
-| Option                     | Type   | Mandatory           | Default                                             | Description                                                                                                                                                               |
-| -------------------------- | ------ | ------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| bootstrap                  | bool   | No                  | `true`                                              | Set to `false` if you don't use Bootstrap and don't want the Bootstrap related classed to be added.                                                                       |
-| bootstrapVersion           | int    | No                  | `5`                                                 | Set the Bootstrap version for rendering. Currently only Bootstrap 5 is supported.                                                                                         |
-| labelFilter                | string | No, but recommended | `"Filter by"`                                       | Text displayed at the beginning of the filter row. This option can be useful if the label should be shown in other languages                                              |
-| ajax                       | string | No                  | `null`                                              | URL to server endpoint for server-side processing. Enabled by providing a value.                                                                                          |
-| columns                    | array  | Yes                 |                                                     | Array of definitions, one for each column that gets a filter element                                                                                                      |
-| columns[].idx              | number | Yes                 |                                                     | Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array                                                             |
-| columns[].labelDropdownAll | string | No, but recommended | `"All"`                                             | Text displayed for the "All" option in the dropdown.                                                                                                                      |
-| columns[].maxWidth         | string | No                  | `null`                                              | CSS value to assigned to max-width. Use `"null"` to turn off automatic max-width or specify a custom width, e.g. `"5em"`                                                  |
-| columns[].title            | string | No                  | The header text of the column you want to filter by | Filter dropdown label for the respective column. This is useful if you want to filter by the contents of an invisible column that usually would not have any header label |
+| Option                     | Type   | Mandatory           | Default                                             | Description                                                                                                                                                                |
+| -------------------------- | ------ | ------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| bootstrap                  | bool   | No                  | `true`                                              | Set to `false` if you don't use Bootstrap and don't want the Bootstrap related classed to be added.                                                                        |
+| bootstrapVersion           | int    | No                  | `5`                                                 | Set the Bootstrap version for rendering. Currently only Bootstrap 5 is supported.                                                                                          |
+| labelFilter                | string | No, but recommended | `"Filter by"`                                       | Text displayed at the beginning of the filter row. This option can be useful if the label should be shown in other languages.                                              |
+| ajax                       | string | No                  | `null`                                              | URL to server endpoint for server-side processing. Enabled by providing a value.                                                                                           |
+| columns                    | array  | Yes                 |                                                     | Array of definitions, one for each column that gets a filter element.                                                                                                      |
+| columns[].idx              | number | Yes                 |                                                     | Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array.                                                             |
+| columns[].labelDropdownAll | string | No, but recommended | `"All"`                                             | Text displayed for the "All" option in the dropdown.                                                                                                                       |
+| columns[].maxWidth         | string | No                  | `null`                                              | CSS value to assigned to max-width. Use `"null"` to turn off automatic max-width or specify a custom width, e.g. `"5em"`.                                                  |
+| columns[].title            | string | No                  | The header text of the column you want to filter by | Filter dropdown label for the respective column. This is useful if you want to filter by the contents of an invisible column that usually would not have any header label. |
 
-## Dependencies<a name="dependencies"></a>
+## Supported Library Versions<a name="supported-library-versions"></a>
 
 - jQuery: 3, 4
 - DataTables: 1, 2, 3

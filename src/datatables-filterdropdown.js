@@ -1,7 +1,7 @@
 /*!
  * DataTables - filterDropDown plugin (modernized fork by Peter Pfeufer)
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @author Peter Pfeufer
  * @license GPL-3.0 or later
  * @link https://github.com/ppfeufer/datatables-filterdropdown
@@ -68,7 +68,7 @@
 })((window, document, DataTable) => { // jshint ignore:line
     'use strict';
 
-    const version = '0.0.3';
+    const version = '0.0.4';
 
     /**
      * Default settings for the filterDropDown plugin.
