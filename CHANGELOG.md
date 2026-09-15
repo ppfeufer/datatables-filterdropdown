@@ -48,6 +48,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Added
+
+- DataTables API instance cache to prevent multiple calls to the same method
+
 ## [0.0.3] - 2026-09-10
 
 ### Changed
