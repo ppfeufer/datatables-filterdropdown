@@ -50,6 +50,8 @@ Section Order:
 
 ### Added
 
+- `bootstrap` option to disable the Bootstrap styling and use the default DataTables
+  styling instead, when set to `false` (Default: `true`)
 - DataTables API instance cache to prevent multiple calls to the same method
 
 ## [0.0.3] - 2026-09-10

@@ -81,6 +81,7 @@
         return {
             filterDef: {
                 ajax: null,
+                bootstrap: true,
                 bootstrapVersion: 5,
                 columns: [],
                 labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
@@ -386,12 +387,17 @@
         const filterWrapperId = `${id}_filterWrapper`;
 
         // Set CSS classes for the filter wrapper div
-        let filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+        let filterWrapperCssClasses = filterWrapperId;
 
-        // Override for a potentially different Bootstrap version in the future
-        // if (filterDef.bootstrapVersion === 5) {
-        //     filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
-        // }
+        if (filterDef.bootstrap) {
+            // Bootstrap 5 CSS classes for the filter wrapper div
+            filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+
+            // Override for a potentially different Bootstrap version in the future
+            // if (filterDef.bootstrapVersion === 5) {
+            //     filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+            // }
+        }
 
         $(container).prepend(`<div class="row justify-content-between"><p class="mb-1 fw-bold">${filterDef.labelFilter}:</p><div id="${filterWrapperId}" class="${filterWrapperCssClasses}"></div></div>`);
 
@@ -414,12 +420,17 @@
             // clear which column is filtered and also to make the filter accessible
             // for screen readers, the select element will be initialized with default
             // option and options will be added after filtering the table
-            let selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+            let selectMarkup = `<div><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select ${id}_filterSelect"></select></div>`;
 
-            // Override for a potentially different Bootstrap version in the future
-            // if (filterDef.bootstrapVersion === 5) {
-            //     selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
-            // }
+            if (filterDef.bootstrap) {
+                // Bootstrap 5 markup for select element with label
+                selectMarkup = `<div class="col-auto"><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+
+                // Override for a potentially different Bootstrap version in the future
+                // if (filterDef.bootstrapVersion === 5) {
+                //     selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+                // }
+            }
 
             $(`#${filterWrapperId}`).append(selectMarkup);
 
