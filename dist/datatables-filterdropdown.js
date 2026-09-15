@@ -1,7 +1,7 @@
 /*!
  * DataTables - filterDropDown plugin (modernized fork by Peter Pfeufer)
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @author Peter Pfeufer
  * @license GPL-3.0 or later
  * @link https://github.com/ppfeufer/datatables-filterdropdown
@@ -68,7 +68,7 @@
 })((window, document, DataTable) => { // jshint ignore:line
     'use strict';
 
-    const version = '0.0.3';
+    const version = '0.0.4';
 
     /**
      * Default settings for the filterDropDown plugin.
@@ -81,6 +81,7 @@
         return {
             filterDef: {
                 ajax: null,
+                bootstrap: true,
                 bootstrapVersion: 5,
                 columns: [],
                 labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
@@ -180,6 +181,27 @@
             }
         };
     })();
+
+    /**
+     * Get the DataTables API instance from the settings object, caching it for future use.
+     *
+     * @param {object} settings - The DataTables settings object.
+     * @returns {*|null} - The DataTables API instance or null if not available.
+     * @private
+     */
+    const _apiFromSettingsCached = (settings) => {
+        if (!settings) {
+            return null;
+        }
+
+        // Use an unlikely property name to avoid collisions with DataTables
+        // internals. Store the API instance once per settings object.
+        if (!settings._filterDropDownApi) {
+            settings._filterDropDownApi = dtCompat.apiFromSettings(settings);
+        }
+
+        return settings._filterDropDownApi;
+    };
 
     /**
      * Set the select UI from the column's current search (handles stateSave restore)
@@ -331,8 +353,8 @@
             return;
         }
 
-        // Get the api object for the current dt table
-        const api = dtCompat.apiFromSettings(settings);
+        // Get the api object for the current dt table (cached)
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
@@ -365,12 +387,17 @@
         const filterWrapperId = `${id}_filterWrapper`;
 
         // Set CSS classes for the filter wrapper div
-        let filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+        let filterWrapperCssClasses = filterWrapperId;
 
-        // Override for a potentially different Bootstrap version in the future
-        // if (filterDef.bootstrapVersion === 5) {
-        //     filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
-        // }
+        if (filterDef.bootstrap) {
+            // Bootstrap 5 CSS classes for the filter wrapper div
+            filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+
+            // Override for a potentially different Bootstrap version in the future
+            // if (filterDef.bootstrapVersion === 5) {
+            //     filterWrapperCssClasses = `${filterWrapperId} align-items-center d-flex flex-wrap gap-3 mb-3`;
+            // }
+        }
 
         $(container).prepend(`<div class="row justify-content-between"><p class="mb-1 fw-bold">${filterDef.labelFilter}:</p><div id="${filterWrapperId}" class="${filterWrapperCssClasses}"></div></div>`);
 
@@ -393,12 +420,17 @@
             // clear which column is filtered and also to make the filter accessible
             // for screen readers, the select element will be initialized with default
             // option and options will be added after filtering the table
-            let selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+            let selectMarkup = `<div><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select ${id}_filterSelect"></select></div>`;
 
-            // Override for a potentially different Bootstrap version in the future
-            // if (filterDef.bootstrapVersion === 5) {
-            //     selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
-            // }
+            if (filterDef.bootstrap) {
+                // Bootstrap 5 markup for select element with label
+                selectMarkup = `<div class="col-auto"><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+
+                // Override for a potentially different Bootstrap version in the future
+                // if (filterDef.bootstrapVersion === 5) {
+                //     selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+                // }
+            }
 
             $(`#${filterWrapperId}`).append(selectMarkup);
 
@@ -413,8 +445,8 @@
             return;
         }
 
-        // Get api object for current dt table
-        const api = dtCompat.apiFromSettings(settings);
+        // Get api object for current dt table (cached)
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
@@ -473,7 +505,7 @@
             return;
         }
 
-        const api = dtCompat.apiFromSettings(settings);
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
