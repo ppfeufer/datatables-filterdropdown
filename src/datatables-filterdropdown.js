@@ -182,6 +182,27 @@
     })();
 
     /**
+     * Get the DataTables API instance from the settings object, caching it for future use.
+     *
+     * @param {object} settings - The DataTables settings object.
+     * @returns {*|null} - The DataTables API instance or null if not available.
+     * @private
+     */
+    const _apiFromSettingsCached = (settings) => {
+        if (!settings) {
+            return null;
+        }
+
+        // Use an unlikely property name to avoid collisions with DataTables
+        // internals. Store the API instance once per settings object.
+        if (!settings._filterDropDownApi) {
+            settings._filterDropDownApi = dtCompat.apiFromSettings(settings);
+        }
+
+        return settings._filterDropDownApi;
+    };
+
+    /**
      * Set the select UI from the column's current search (handles stateSave restore)
      *
      * @param select
@@ -331,8 +352,8 @@
             return;
         }
 
-        // Get the api object for the current dt table
-        const api = dtCompat.apiFromSettings(settings);
+        // Get the api object for the current dt table (cached)
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
@@ -413,8 +434,8 @@
             return;
         }
 
-        // Get api object for current dt table
-        const api = dtCompat.apiFromSettings(settings);
+        // Get api object for current dt table (cached)
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
@@ -473,7 +494,7 @@
             return;
         }
 
-        const api = dtCompat.apiFromSettings(settings);
+        const api = _apiFromSettingsCached(settings);
 
         if (!api) {
             return;
