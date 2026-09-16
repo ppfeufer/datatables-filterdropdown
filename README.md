@@ -6,6 +6,7 @@ DataTables Bootstrap Filter Dropdown is a plugin for [DataTables](https://datata
 ![Supported jQuery Versions](https://img.shields.io/badge/jQuery-3_%7C_4-blue "Supported jQuery Versions")
 ![Supported DataTables Versions](https://img.shields.io/badge/DataTables-1_%7C_2_%7C_3-blue "Supported DataTables Versions")
 ![Supported Bootstrap Versions](https://img.shields.io/badge/Bootstrap-5-blue "Supported Bootstrap Versions")
+[![codecov](https://codecov.io/gh/ppfeufer/datatables-filterdropdown/branch/master/graph/badge.svg?token=GNE88NUAKK)](https://codecov.io/gh/ppfeufer/datatables-filterdropdown)
 
 ______________________________________________________________________
 
