@@ -30,6 +30,7 @@ exclude: |
     .min(.css|.css.map|.js|.js.map)|
     .idea/|
     dist/|
+    __tests__/|
     ISSUE_TEMPLATE/
   )
 

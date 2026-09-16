@@ -17,7 +17,7 @@
  * GitHub: https://github.com/ErikKalkoken/filterDropDown
  **/
 
-/* global define */
+/* global define, process */
 
 /*
  * datatables-filterdropdown
@@ -63,6 +63,7 @@
         }
     } else {
         // Browser
+        /* istanbul ignore next */
         factory(window, document, window.DataTable);
     }
 })((window, document, DataTable) => { // jshint ignore:line
@@ -138,6 +139,7 @@
                     return DataTable.util.escapeRegex(str);
                 }
 
+                /* istanbul ignore next */
                 if (hasJQueryDT && jQuery.fn.dataTable && jQuery.fn.dataTable.util && jQuery.fn.dataTable.util.escapeRegex) {
                     return jQuery.fn.dataTable.util.escapeRegex(str);
                 }
@@ -538,10 +540,29 @@
     }
 
     // Expose a minimal API for module consumers
-    return {
+    const _api = {
         version: version,
         register: () => {
             return true;
         }
     };
+
+    // Test-only: expose internals when running under NODE_ENV=test so unit
+    // tests can exercise internal helpers without modifying production code.
+    try {
+        if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') {
+            _api._test = {
+                parseInitArray,
+                dtCompat,
+                _apiFromSettingsCached,
+                setSelectFromColumnSearch,
+                initSelectForColumn,
+                _defaults
+            };
+        }
+    } catch (e) { // eslint-disable-line no-unused-vars
+        // swallow any error - this is only for tests and must not impact runtime
+    }
+
+    return _api;
 });

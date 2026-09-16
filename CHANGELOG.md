@@ -48,6 +48,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Added
+
+- Jest test suite
+
 ## [0.0.4] - 2026-09-15
 
 ### Added

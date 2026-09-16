@@ -1,7 +1,15 @@
+# Directories
 /node_modules/
-/.make/config-overrides.ini
+/src/test/js/
+/coverage/
 /datatables-filterdropdown/
+
+# Files
+/.make/config-overrides.ini
 /datatables-filterdropdown*.zip
+/*.min.js
+/*.min.js.map
 /src/**/*.min.js
 /src/**/*.min.js.map
-/src/test/js/
+/__tests__/**/*.min.js
+/__tests__/**/*.min.js.map
