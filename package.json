@@ -27,6 +27,7 @@
         "ev-emitter": "^2.1.2",
         "get-size": "^3.0.0",
         "globals": "^17.6.0",
+        "jest": "^30.5.1",
         "jquery": "^4.0.0",
         "jquery-bridget": "^3.0.1",
         "outlayer": "^2.1.1",
@@ -36,7 +37,8 @@
         "copy:js": "mkdir -p dist && cp src/datatables-filterdropdown.js dist/datatables-filterdropdown.js",
         "copy:sources": "npm run copy:js",
         "build": "npm run copy:sources && npm run minify",
-        "lint": "eslint --config eslint.config.js --ext .js --ignore-pattern '**/*.min.js' --ignore-pattern 'dist/**' --debug",
-        "minify": "terser dist/datatables-filterdropdown.js -o dist/datatables-filterdropdown.min.js --source-map \"base='dist/',url='datatables-filterdropdown.min.js.map'\" --compress reduce_vars=false --mangle --format quote_style=1"
+        "lint": "eslint --config eslint.config.js --ext .js --ignore-pattern '**/*.min.js' --ignore-pattern 'dist/**' --ignore-pattern '__tests__/**' --debug",
+        "minify": "terser dist/datatables-filterdropdown.js -o dist/datatables-filterdropdown.min.js --source-map \"base='dist/',url='datatables-filterdropdown.min.js.map'\" --compress reduce_vars=false --mangle --format quote_style=1",
+        "test": "jest --config jest.config.js"
     }
 }
