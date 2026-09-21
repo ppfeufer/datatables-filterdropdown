@@ -50,6 +50,7 @@ Section Order:
 
 ### Added
 
+- Build script to generate the distribution files
 - Jest test suite
 
 ## [0.0.4] - 2026-09-15

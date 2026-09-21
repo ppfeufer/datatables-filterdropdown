@@ -12,9 +12,12 @@ package-lock.json export-ignore
 .make export-ignore
 .nvmrc export-ignore
 .pre-commit-config.yaml export-ignore
+codecov.yml export-ignore
+jest* export-ignore
 eslint.config.js export-ignore
 Makefile export-ignore
 CODEOWNERS export-ignore
 datatables-filterdropdown export-ignore
-scripts export-ignore
 src export-ignore
+coverage export-ignore
+__tests__ export-ignore
