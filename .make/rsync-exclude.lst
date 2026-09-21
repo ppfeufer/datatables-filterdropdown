@@ -18,9 +18,12 @@ Makefile
 *.zip
 .make
 CODEOWNERS
+codecov.yml
+jest*
 docs/
 datatables-filterdropdown/
 node_modules/
-scripts/
 src/
 vendor/
+coverage/
+__tests__/

@@ -36,7 +36,7 @@
     "scripts": {
         "copy:js": "mkdir -p dist && cp src/datatables-filterdropdown.js dist/datatables-filterdropdown.js",
         "copy:sources": "npm run copy:js",
-        "build": "npm run copy:sources && npm run minify",
+        "build": "node src/scripts/build.js && npm run minify",
         "lint": "eslint --config eslint.config.js --ext .js --ignore-pattern '**/*.min.js' --ignore-pattern 'dist/**' --ignore-pattern '__tests__/**' --debug",
         "minify": "terser dist/datatables-filterdropdown.js -o dist/datatables-filterdropdown.min.js --source-map \"base='dist/',url='datatables-filterdropdown.min.js.map'\" --compress reduce_vars=false --mangle --format quote_style=1",
         "test": "jest --config jest.config.js"
