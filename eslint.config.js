@@ -1,9 +1,13 @@
 import globals from 'globals'; // Import the globals package
 import js from '@eslint/js'; // Import the ESLint JavaScript configuration
 import { defineConfig } from 'eslint/config'; // Import the defineConfig function from ESLint
+import stylistic from '@stylistic/eslint-plugin'; // Import the Stylistic ESLint plugin
 
 export default defineConfig([
     {
+        plugins: {
+            '@stylistic': stylistic
+        },
         languageOptions: {
             globals: {
                 ...globals.browser,
@@ -21,12 +25,17 @@ export default defineConfig([
         },
         rules: {
             ...js.configs.recommended.rules,
-            indent: ['error', 4],
+            indent: ['error', 4, {
+                'SwitchCase': 1
+            }],
             quotes: ['error', 'single', {
                 avoidEscape: true,
                 allowTemplateLiterals: true
             }],
             semi: [2, 'always'],
+            '@stylistic/brace-style': ['error', '1tbs', {
+                allowSingleLine: false
+            }],
         },
     }
 ]);
