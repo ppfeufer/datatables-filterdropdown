@@ -23,6 +23,7 @@
     "type": "module",
     "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@stylistic/eslint-plugin": "^5.10.0",
         "eslint": "^10.4.1",
         "ev-emitter": "^2.1.2",
         "get-size": "^3.0.0",
