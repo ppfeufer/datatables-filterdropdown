@@ -26,4 +26,4 @@ node_modules/
 src/
 vendor/
 coverage/
-__tests__/
+tests/

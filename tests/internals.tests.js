@@ -153,7 +153,7 @@ test('internals: parseInitArray and dtCompat basics', () => {
         }, version: '2.5.0', util: {escapeRegex: (s) => s.replace(/\+/g, '\\+')}
     };
 
-    // use shared loadInternals helper from __tests__/test-helpers.js
+    // use shared loadInternals helper from tests/test-helpers.js
 
     delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
     const pluginModule = require('../src/datatables-filterdropdown.js');

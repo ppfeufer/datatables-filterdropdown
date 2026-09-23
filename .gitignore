@@ -11,5 +11,5 @@
 /*.min.js.map
 /src/**/*.min.js
 /src/**/*.min.js.map
-/__tests__/**/*.min.js
-/__tests__/**/*.min.js.map
+/tests/**/*.min.js
+/tests/**/*.min.js.map
