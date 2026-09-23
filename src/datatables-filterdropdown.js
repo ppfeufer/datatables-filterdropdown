@@ -274,14 +274,22 @@
         };
 
         // Set filter properties if they have been defined otherwise the defaults will be used
+        // Set bootstrap if defined and is a boolean
+        if ('bootstrap' in initArray && typeof initArray.bootstrap === 'boolean') {
+            filterDef.bootstrap = initArray.bootstrap;
+        }
+
+        // Set bootstrapVersion if defined and is a number
         if ('bootstrapVersion' in initArray && typeof initArray.bootstrapVersion === 'number') {
             filterDef.bootstrapVersion = initArray.bootstrapVersion;
         }
 
+        // Set ajax if defined and is a string
         if ('ajax' in initArray && typeof initArray.ajax === 'string') {
             filterDef.ajax = initArray.ajax;
         }
 
+        // Set labelFilter if defined and is a string
         if ('labelFilter' in initArray && typeof initArray.labelFilter === 'string') {
             filterDef.labelFilter = initArray.labelFilter;
         }
