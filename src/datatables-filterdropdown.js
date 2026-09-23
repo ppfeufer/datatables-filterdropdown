@@ -1,7 +1,7 @@
 /*!
  * DataTables - filterDropDown plugin (modernized fork by Peter Pfeufer)
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @author Peter Pfeufer
  * @license GPL-3.0 or later
  * @link https://github.com/ppfeufer/datatables-filterdropdown
@@ -17,7 +17,7 @@
  * GitHub: https://github.com/ErikKalkoken/filterDropDown
  **/
 
-/* global define, process */
+/* global define */
 
 /*
  * datatables-filterdropdown
@@ -69,7 +69,7 @@
 })((window, document, DataTable) => { // jshint ignore:line
     'use strict';
 
-    const version = '0.0.4';
+    const version = '0.0.5';
 
     /**
      * Default settings for the filterDropDown plugin.
@@ -573,7 +573,7 @@
     // tests can exercise internal helpers without modifying production code.
     // istanbul ignore next
     try {
-        if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') {
+        if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'test') { // eslint-disable-line no-undef
             _api._test = {
                 parseInitArray,
                 dtCompat,

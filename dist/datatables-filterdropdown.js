@@ -1,7 +1,7 @@
 /*!
  * DataTables - filterDropDown plugin (modernized fork by Peter Pfeufer)
  *
- * @version 0.0.4
+ * @version 0.0.5
  * @author Peter Pfeufer
  * @license GPL-3.0 or later
  * @link https://github.com/ppfeufer/datatables-filterdropdown
@@ -68,7 +68,7 @@
 })((window, document, DataTable) => { // jshint ignore:line
     'use strict';
 
-    const version = '0.0.4';
+    const version = '0.0.5';
 
     /**
      * Default settings for the filterDropDown plugin.
@@ -87,6 +87,7 @@
                 labelFilter: 'Filter by' // Please set this explicitly, so it can be translated
             },
             columnDef: {
+                cssClasses: null,
                 labelDropdownAll: 'All', // Please set this explicitly, so it can be translated
                 maxWidth: null,
                 title: null
@@ -271,14 +272,22 @@
         };
 
         // Set filter properties if they have been defined otherwise the defaults will be used
+        // Set bootstrap if defined and is a boolean
+        if ('bootstrap' in initArray && typeof initArray.bootstrap === 'boolean') {
+            filterDef.bootstrap = initArray.bootstrap;
+        }
+
+        // Set bootstrapVersion if defined and is a number
         if ('bootstrapVersion' in initArray && typeof initArray.bootstrapVersion === 'number') {
             filterDef.bootstrapVersion = initArray.bootstrapVersion;
         }
 
+        // Set ajax if defined and is a string
         if ('ajax' in initArray && typeof initArray.ajax === 'string') {
             filterDef.ajax = initArray.ajax;
         }
 
+        // Set labelFilter if defined and is a string
         if ('labelFilter' in initArray && typeof initArray.labelFilter === 'string') {
             filterDef.labelFilter = initArray.labelFilter;
         }
@@ -297,14 +306,22 @@
                     filterDef.columnsIdxList.push(idx);
 
                     // Set column properties if they have been defined otherwise the defaults will be used
+                    // Set cssClasses if defined and is a string
+                    if ('cssClasses' in initColumn && typeof initColumn.cssClasses === 'string') {
+                        filterDef.columns[idx].cssClasses = initColumn.cssClasses;
+                    }
+
+                    // Set title if defined and is a string
                     if ('title' in initColumn && typeof initColumn.title === 'string') {
                         filterDef.columns[idx].title = initColumn.title;
                     }
 
+                    // Set maxWidth if defined and is a string
                     if ('maxWidth' in initColumn && typeof initColumn.maxWidth === 'string') {
                         filterDef.columns[idx].maxWidth = initColumn.maxWidth;
                     }
 
+                    // Set labelDropdownAll if defined and is a string
                     if ('labelDropdownAll' in initColumn && typeof initColumn.labelDropdownAll === 'string') {
                         filterDef.columns[idx].labelDropdownAll = initColumn.labelDropdownAll;
                     }
@@ -416,19 +433,22 @@
             // Adding the select element for current column to container
             const selectId = `${id}_filterSelect${colIndex}`;
 
+            // Adding additional CSS classes to the select element if defined in the column definition
+            const additionalCssClasses = filterDef.columns[colIndex].cssClasses ? ` ${filterDef.columns[colIndex].cssClasses}` : '';
+
             // Set markup for select element with label, the label is needed to make
             // clear which column is filtered and also to make the filter accessible
             // for screen readers, the select element will be initialized with default
             // option and options will be added after filtering the table
-            let selectMarkup = `<div><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select ${id}_filterSelect"></select></div>`;
+            let selectMarkup = `<div class="col-filter${additionalCssClasses}"><label for="${selectId}">${colName}</label><select id="${selectId}" class="${id}_filterSelect"></select></div>`;
 
             if (filterDef.bootstrap) {
                 // Bootstrap 5 markup for select element with label
-                selectMarkup = `<div class="col-auto"><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+                selectMarkup = `<div class="col-auto col-filter${additionalCssClasses}"><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
 
                 // Override for a potentially different Bootstrap version in the future
                 // if (filterDef.bootstrapVersion === 5) {
-                //     selectMarkup = `<div><label for="${selectId}" class="col-auto">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
+                //     selectMarkup = `<div class="col-auto col-filter${additionalCssClasses}"><label for="${selectId}" class="form-label">${colName}</label><select id="${selectId}" class="form-select form-select-sm w-auto ${id}_filterSelect"></select></div>`;
                 // }
             }
 
@@ -538,10 +558,12 @@
     }
 
     // Expose a minimal API for module consumers
-    return {
+    const _api = {
         version: version,
         register: () => {
             return true;
         }
     };
+
+    return _api;
 });

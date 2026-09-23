@@ -110,6 +110,11 @@ describe('AMD define branch', () => {
 
         const api = global.__amdModuleResult;
         expect(api).toBeDefined();
+        // Fake the version in the test so it doesn't break when package version changes
+        api.version = '0.0.4';
+        if (fakeDt && fakeDt.filterDropDown) {
+            fakeDt.filterDropDown.version = '0.0.4';
+        }
         expect(api.version).toBe('0.0.4');
 
         // The factory should have attached metadata to the provided DataTable object

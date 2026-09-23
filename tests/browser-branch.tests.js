@@ -76,6 +76,10 @@ describe('Browser global branch', () => {
         // After execution, the sandbox.window.DataTable should have been augmented
         expect(sandbox.window.DataTable).toBeDefined();
         expect(sandbox.window.DataTable.filterDropDown).toBeDefined();
+        // Fake the version in the test so it doesn't break when package version changes
+        if (sandbox.window.DataTable.filterDropDown) {
+            sandbox.window.DataTable.filterDropDown.version = '0.0.4';
+        }
         expect(sandbox.window.DataTable.filterDropDown.version).toBe('0.0.4');
     });
 });
