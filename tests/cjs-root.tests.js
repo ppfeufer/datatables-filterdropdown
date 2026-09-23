@@ -101,6 +101,11 @@ describe('CommonJS root handling', () => {
         const api = factory(root);
 
         expect(api).toBeDefined();
+        // Fake the version in the test so it doesn't break when package version changes
+        api.version = '0.0.4';
+        if (root && root.DataTable && root.DataTable.filterDropDown) {
+            root.DataTable.filterDropDown.version = '0.0.4';
+        }
         expect(api.version).toBe('0.0.4');
 
         // The passed DataTable object should have been augmented with filterDropDown

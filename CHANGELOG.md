@@ -48,6 +48,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [0.0.5] - 2026-09-23
+
 ### Added
 
 - Additional CSS classes option to allow for more customization of the dropdowns
@@ -97,6 +99,7 @@ Section Order:
 [0.0.2]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.1...v0.0.2 "v0.0.2"
 [0.0.3]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.2...v0.0.3 "v0.0.3"
 [0.0.4]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.3...v0.0.4 "v0.0.4"
-[in development]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.4...HEAD "In Development"
+[0.0.5]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.4...v0.0.5 "v0.0.5"
+[in development]: https://github.com/ppfeufer/datatables-filterdropdown/compare/v0.0.5...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"
