@@ -2,11 +2,12 @@
 
 const fs = require('fs');
 const path = require('path');
+const {testedFile} = require('./helpers/test-helpers');
 
 test('exercise all source lines for coverage reporting (synthetic)', () => {
     'use strict';
 
-    const srcPath = path.resolve(__dirname, '../src/datatables-filterdropdown.js');
+    const srcPath = path.resolve(__dirname, testedFile);
     const src = fs.readFileSync(srcPath, 'utf8');
     const lines = src.split('\n').length;
 

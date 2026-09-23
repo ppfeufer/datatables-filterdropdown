@@ -1,5 +1,7 @@
 /* global jest, describe, it, expect, beforeEach, afterEach */
 
+const {testedFile} = require('./helpers/test-helpers');
+
 describe('AMD define branch', () => {
     'use strict';
 
@@ -102,7 +104,7 @@ describe('AMD define branch', () => {
         global.define.amd = true;
 
         // Require the module which should invoke our define shim
-        require('../src/datatables-filterdropdown.js');
+        require(testedFile);
 
         expect(defineCalled).toBe(true);
 

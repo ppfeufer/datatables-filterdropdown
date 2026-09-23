@@ -2,6 +2,8 @@
 
 'use strict';
 
+const {testedFile} = require('./helpers/test-helpers');
+
 // Mock datatables.net to allow the plugin to require it when DataTable is
 // not present on the provided root. The mock will create a minimal
 // DataTable object that the plugin can attach to.
@@ -37,15 +39,19 @@ const makeWrapper = (nodes) => {
     return {
         nodes,
         prepend: (html) => {
-            if (nodes[0]) nodes[0].insertAdjacentHTML('afterbegin', html);
+            if (nodes[0]) {
+                nodes[0].insertAdjacentHTML('afterbegin', html);
+            }
             return makeWrapper(nodes);
         },
         append: (html) => {
-            if (nodes[0]) nodes[0].insertAdjacentHTML('beforeend', html);
+            if (nodes[0]) {
+                nodes[0].insertAdjacentHTML('beforeend', html);
+            }
             return makeWrapper(nodes);
         },
         empty: () => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.innerHTML = '';
             });
             return makeWrapper(nodes);
@@ -56,14 +62,16 @@ const makeWrapper = (nodes) => {
         },
         html: () => nodes[0] ? nodes[0].innerHTML : '',
         val: (v) => {
-            if (v === undefined) return nodes[0] ? nodes[0].value || '' : '';
-            nodes.forEach(n => {
+            if (v === undefined) {
+                return nodes[0] ? nodes[0].value || '' : '';
+            }
+            nodes.forEach((n) => {
                 n.value = v;
             });
             return makeWrapper(nodes);
         },
         change: (handler) => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.__change = handler;
             });
             return makeWrapper(nodes);
@@ -77,10 +85,16 @@ const makeWrapper = (nodes) => {
 };
 
 const $fn = (sel) => {
-    if (sel === document) return eventAPI;
-    if (sel && typeof sel === 'object' && typeof sel.insertAdjacentHTML === 'function') return makeWrapper([sel]);
+    if (sel === document) {
+        return eventAPI;
+    }
+    if (sel && typeof sel === 'object' && typeof sel.insertAdjacentHTML === 'function') {
+        return makeWrapper([sel]);
+    }
     // if a wrapper created by makeWrapper is passed in, return it directly
-    if (sel && typeof sel === 'object' && Array.isArray(sel.nodes)) return sel;
+    if (sel && typeof sel === 'object' && Array.isArray(sel.nodes)) {
+        return sel;
+    }
     if (typeof sel === 'string' && sel.startsWith('#')) {
         const el = document.getElementById(sel.slice(1));
         return makeWrapper(el ? [el] : []);
@@ -125,7 +139,7 @@ if (typeof global.document === 'undefined') {
                         if (t === 'option') {
                             // parse value and text
                             const valMatch = /value\s*=\s*"([^"]*)"/.exec(html);
-                            const txtMatch = />((?:.|\n)*)<\s*\/option/.exec(html);
+                            const txtMatch = />([.\n]*)<\s*\/option/.exec(html);
                             newEl.tagName = 'OPTION';
                             newEl.value = valMatch ? valMatch[1] : '';
                             newEl.text = txtMatch ? txtMatch[1] : '';
@@ -141,7 +155,7 @@ if (typeof global.document === 'undefined') {
                 },
                 querySelectorAll (sel) {
                     if (sel === 'option') {
-                        return this.children.filter(c => c.tagName === 'OPTION');
+                        return this.children.filter((c) => c.tagName === 'OPTION');
                     }
                     return [];
                 }
@@ -171,7 +185,7 @@ test('exposes version and register when a global DataTable is provided', () => {
         util: {escapeRegex: (s) => String(s).replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}
     };
 
-    const pluginModule = require('../src/datatables-filterdropdown.js');
+    const pluginModule = require(testedFile);
     const api = typeof pluginModule === 'function' ? pluginModule(global) : pluginModule;
 
     expect(api).toBeDefined();
@@ -190,11 +204,11 @@ test('initializes DataTable via datatables.net when DataTable missing on root', 
 
     // Ensure module is reloaded so CommonJS path runs again and the mocked
     // 'datatables.net' factory gets a chance to attach DataTable to the root.
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
     // Ensure the mocked datatables.net creates a DataTable on the root
     // in environments where the module loader behavior may differ.
     require('datatables.net')(global);
-    require('../src/datatables-filterdropdown.js');
+    require(testedFile);
 
     // set up a fake table and settings and trigger the preInit and init handlers
     const container = document.createElement('div');
@@ -325,7 +339,7 @@ test('stateLoaded.dt appends missing option when column search value not present
     // create select manually to simulate earlier init state
     const wrapper = document.createElement('select');
     wrapper.id = 'teststate_filterSelect0';
-    wrapper.insertAdjacentHTML('beforeend', `<option value="">All</option>`);
+    wrapper.insertAdjacentHTML('beforeend', '<option value="">All</option>');
     // register in our document
     if (global.document && typeof global.document.getElementById === 'function') {
         // our minimal document stores by id via createElement, so ensure element recorded
@@ -428,10 +442,10 @@ test('register returns true and version is stable across calls', () => {
     global.DataTable = global.DataTable || {
         Api: function (s) {
             this.settings = s;
-        }, version: '3.1.0', util: {escapeRegex: s => s}
+        }, version: '3.1.0', util: {escapeRegex: (s) => s}
     };
 
-    const pluginModule = require('../src/datatables-filterdropdown.js');
+    const pluginModule = require(testedFile);
     const api1 = typeof pluginModule === 'function' ? pluginModule(global) : pluginModule;
     const v1 = api1.version;
 

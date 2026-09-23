@@ -2,6 +2,8 @@
 
 'use strict';
 
+const {testedFile} = require('./helpers/test-helpers');
+
 // dtCompat: apiFromSettings fallback and jQuery Api path
 test('dtCompat: apiFromSettings fallback and jQuery Api path', () => {
     jest.isolateModules(() => {
@@ -35,8 +37,8 @@ test('dtCompat: apiFromSettings fallback and jQuery Api path', () => {
         };
 
         process.env.NODE_ENV = 'test';
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin = require(testedFile);
         const mod = typeof plugin === 'function' ? plugin(global) : plugin;
         const dtc = mod._test.dtCompat;
 
@@ -55,8 +57,8 @@ test('dtCompat: apiFromSettings fallback and jQuery Api path', () => {
             }
         };
         // Re-require plugin to capture dtCompat with jQuery present
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin2 = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin2 = require(testedFile);
         const mod2 = typeof plugin2 === 'function' ? plugin2(global) : plugin2;
         const dtc2 = mod2._test.dtCompat;
 
@@ -74,21 +76,24 @@ test('dtCompat: escapeRegex fallback and version branches', () => {
         }, {virtual: true});
 
         // minimal $ stub
-        global.$ = global.jQuery = (sel) => (sel === global.document ? {
-            on: () => {
-            }, trigger: () => {
+        global.$ = global.jQuery = (sel) => (sel === global.document
+            ? { // jshint ignore:line
+                on: () => {
+                }, trigger: () => {
+                }
             }
-        } : {
-            append: () => {
-            },
-            empty: () => ({}),
-            find: () => ({map: () => ({get: () => []})}),
-            val: () => ''
-        });
+            : {
+                append: () => {
+                },
+                empty: () => ({}),
+                find: () => ({map: () => ({get: () => []})}),
+                val: () => ''
+            }
+        );
 
         process.env.NODE_ENV = 'test';
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin = require(testedFile);
         const mod = typeof plugin === 'function' ? plugin(global) : plugin;
         const dtc = mod._test.dtCompat;
 
@@ -138,7 +143,7 @@ test('dtCompat: escapeRegex fallback and version branches', () => {
                     },
                     querySelectorAll (sel) {
                         if (sel === 'option') {
-                            return this.children.filter(c => c.tagName === 'OPTION');
+                            return this.children.filter((c) => c.tagName === 'OPTION');
                         }
 
                         return [];
@@ -156,20 +161,23 @@ test('dtCompat: escapeRegex fallback and version branches', () => {
             };
         }
 
-        global.$ = global.jQuery = (sel) => (sel === global.document ? {
-            on: () => {
-            }, trigger: () => {
+        global.$ = global.jQuery = (sel) => (sel === global.document
+            ? { // jshint ignore:line
+                on: () => {
+                }, trigger: () => {
+                }
             }
-        } : {
-            append: () => {
-            },
-            empty: () => ({}),
-            find: () => ({map: () => ({get: () => []})}),
-            val: () => ''
-        });
+            : {
+                append: () => {
+                },
+                empty: () => ({}),
+                find: () => ({map: () => ({get: () => []})}),
+                val: () => ''
+            }
+        );
         global.jQuery.fn = {dataTable: {version: '3.2.1'}};
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin2 = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin2 = require(testedFile);
         const mod2 = typeof plugin2 === 'function' ? plugin2(global) : plugin2;
         expect(mod2._test.dtCompat.version()).toBe('3.2.1');
 
@@ -177,20 +185,23 @@ test('dtCompat: escapeRegex fallback and version branches', () => {
         delete global.jQuery;
         delete global.$;
         // Ensure minimal $ exists so top-level plugin code doesn't throw
-        global.$ = global.jQuery = (sel) => (sel === global.document ? {
-            on: () => {
-            }, trigger: () => {
+        global.$ = global.jQuery = (sel) => (sel === global.document
+            ? { // jshint ignore:line
+                on: () => {
+                }, trigger: () => {
+                }
             }
-        } : {
-            append: () => {
-            },
-            empty: () => ({}),
-            find: () => ({map: () => ({get: () => []})}),
-            val: () => ''
-        });
+            : {
+                append: () => {
+                },
+                empty: () => ({}),
+                find: () => ({map: () => ({get: () => []})}),
+                val: () => ''
+            }
+        );
         global.DataTable = {version: '2.0.0'};
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin3 = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin3 = require(testedFile);
         const mod3 = typeof plugin3 === 'function' ? plugin3(global) : plugin3;
         expect(mod3._test.dtCompat.version()).toBe('2.0.0');
     });
@@ -214,7 +225,7 @@ test('setSelectFromColumnSearch: early return on falsy args and append missing o
                 eventHandlers[evt] = eventHandlers[evt] || [];
                 eventHandlers[evt].push(h);
             }, trigger: (evt, ...a) => {
-                (eventHandlers[evt] || []).forEach(h => h(...a));
+                (eventHandlers[evt] || []).forEach((h) => h(...a));
             }
         };
 
@@ -235,7 +246,7 @@ test('setSelectFromColumnSearch: early return on falsy args and append missing o
                 return makeWrapper(nodes);
             },
             empty: () => {
-                nodes.forEach(n => {
+                nodes.forEach((n) => {
                     n.innerHTML = '';
                 });
 
@@ -252,14 +263,14 @@ test('setSelectFromColumnSearch: early return on falsy args and append missing o
                     return nodes[0] ? nodes[0].value || '' : '';
                 }
 
-                nodes.forEach(n => {
+                nodes.forEach((n) => {
                     n.value = v;
                 });
 
                 return makeWrapper(nodes);
             },
             change: (handler) => {
-                nodes.forEach(n => {
+                nodes.forEach((n) => {
                     n.__change = handler;
                 });
                 return makeWrapper(nodes);
@@ -299,8 +310,8 @@ test('setSelectFromColumnSearch: early return on falsy args and append missing o
         global.jQuery = global.$ = $fn;
 
         process.env.NODE_ENV = 'test';
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin = require(testedFile);
         const mod = typeof plugin === 'function' ? plugin(global) : plugin;
         const {setSelectFromColumnSearch} = mod._test;
 
@@ -313,7 +324,7 @@ test('setSelectFromColumnSearch: early return on falsy args and append missing o
         const column = {search: () => '^missing$'};
         setSelectFromColumnSearch(sel, column);
         const opts = sel.querySelectorAll('option');
-        const found = Array.from(opts).some(o => o.value === 'missing');
+        const found = Array.from(opts).some((o) => o.value === 'missing');
         expect(found).toBe(true);
     });
 });
@@ -330,21 +341,24 @@ test('DataTable.filterDropDown.register returns true when attached', () => {
             Api: function () {
             }
         };
-        global.$ = global.jQuery = (sel) => (sel === global.document ? {
-            on: () => {
-            }, trigger: () => {
+        global.$ = global.jQuery = (sel) => (sel === global.document
+            ? { // jshint ignore:line
+                on: () => {
+                }, trigger: () => {
+                }
             }
-        } : {
-            append: () => {
-            },
-            empty: () => ({}),
-            find: () => ({map: () => ({get: () => []})}),
-            val: () => ''
-        });
+            : {
+                append: () => {
+                },
+                empty: () => ({}),
+                find: () => ({map: () => ({get: () => []})}),
+                val: () => ''
+            }
+        );
 
         process.env.NODE_ENV = 'test';
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin = require(testedFile);
         const mod = typeof plugin === 'function' ? plugin(global) : plugin;
 
         expect(global.DataTable.filterDropDown).toBeDefined();

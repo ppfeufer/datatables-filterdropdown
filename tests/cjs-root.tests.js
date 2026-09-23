@@ -1,10 +1,13 @@
 /* global jest, describe, it, expect, beforeEach, afterEach */
 
+const {testedFile} = require('./helpers/test-helpers');
+
 describe('CommonJS root handling', () => {
     'use strict';
 
     beforeEach(() => {
         jest.resetModules();
+
         // Ensure `window` is not defined so module uses the CommonJS factory branch
         try {
             delete global.window;
@@ -18,14 +21,17 @@ describe('CommonJS root handling', () => {
             delete global.window;
         } catch (e) { // eslint-disable-line no-unused-vars
         }
+
         try {
             delete global.document;
         } catch (e) { // eslint-disable-line no-unused-vars
         }
+
         try {
             delete global.$;
         } catch (e) { // eslint-disable-line no-unused-vars
         }
+
         try {
             delete global.jQuery;
         } catch (e) { // eslint-disable-line no-unused-vars
@@ -33,7 +39,7 @@ describe('CommonJS root handling', () => {
     });
 
     it('calling CommonJS factory without root throws (hits the if (!root) branch)', () => {
-        const factory = require('../src/datatables-filterdropdown.js');
+        const factory = require(testedFile);
 
         expect(typeof factory).toBe('function');
 
@@ -88,7 +94,7 @@ describe('CommonJS root handling', () => {
             util: fakeDt.util
         };
 
-        const factory = require('../src/datatables-filterdropdown.js');
+        const factory = require(testedFile);
 
         expect(typeof factory).toBe('function');
 

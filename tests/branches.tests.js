@@ -1,5 +1,7 @@
 /* global jest, test, expect, process */
 
+const {testedFile} = require('./helpers/test-helpers');
+
 // Common helper: create lightweight document and jQuery-like $ for tests
 function setupMinimalDOMAndJQuery () {
     'use strict';
@@ -32,7 +34,7 @@ function setupMinimalDOMAndJQuery () {
 
                         if (t === 'option') {
                             const valMatch = /value\s*=\s*"([^"]*)"/.exec(html);
-                            const txtMatch = />((?:.|\n)*)<\s*\/option/.exec(html);
+                            const txtMatch = />([.\n]*)<\s*\/option/.exec(html);
 
                             newEl.tagName = 'OPTION';
                             newEl.value = valMatch ? valMatch[1] : '';
@@ -50,7 +52,7 @@ function setupMinimalDOMAndJQuery () {
                 },
                 querySelectorAll (sel) {
                     if (sel === 'option') {
-                        return this.children.filter(c => c.tagName === 'OPTION');
+                        return this.children.filter((c) => c.tagName === 'OPTION');
                     }
 
                     return [];
@@ -64,7 +66,7 @@ function setupMinimalDOMAndJQuery () {
 
         global.document = {
             createElement,
-            getElementById: (id) => elements[id] || all.find(e => e.id === id) || null,
+            getElementById: (id) => elements[id] || all.find((e) => e.id === id) || null,
             querySelectorAll: () => []
         };
     }
@@ -76,7 +78,7 @@ function setupMinimalDOMAndJQuery () {
             handlers[e] = handlers[e] || [];
             handlers[e].push(h);
         }, trigger: (e, ...a) => {
-            (handlers[e] || []).forEach(h => h(...a));
+            (handlers[e] || []).forEach((h) => h(...a));
         }
     };
     const makeWrapper = (nodes) => ({
@@ -96,7 +98,7 @@ function setupMinimalDOMAndJQuery () {
             return makeWrapper(nodes);
         },
         empty: () => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 if (n) {
                     n.innerHTML = '';
                 }
@@ -115,14 +117,14 @@ function setupMinimalDOMAndJQuery () {
                 return nodes[0] ? nodes[0].value || '' : '';
             }
 
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.value = v;
             });
 
             return makeWrapper(nodes);
         },
         change: (h) => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.__change = h;
             });
 
@@ -308,9 +310,8 @@ test('preInit with empty columns does nothing', () => {
 
     process.env.NODE_ENV = 'test';
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const pluginModule = require('../src/datatables-filterdropdown.js');
     const settings = {};
 
     settings._filterDropDownApi = {
@@ -334,9 +335,9 @@ test('preInit with bootstrap=false and empty header uses fallback column name', 
 
     process.env.NODE_ENV = 'test';
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const pluginModule3 = require('../src/datatables-filterdropdown.js');
+    const pluginModule3 = require(testedFile);
     const plugin = typeof pluginModule3 === 'function' ? pluginModule3(global) : pluginModule3;
     const container = {
         insertAdjacentHTML: function () {
@@ -367,9 +368,9 @@ test('init.dt ajax branch warns on missing columns in response', () => {
 
     process.env.NODE_ENV = 'test';
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const pluginModule3 = require('../src/datatables-filterdropdown.js');
+    const pluginModule3 = require(testedFile);
     const plugin = typeof pluginModule3 === 'function' ? pluginModule3(global) : pluginModule3;
     const settings = {};
 
@@ -423,9 +424,9 @@ test('dtCompat.isV2 returns true when version >=2 and null when missing', () => 
     global.jQuery = {fn: {dataTable: {version: '2.3.0'}}};
 
     delete global.DataTable;
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    let mod = require('../src/datatables-filterdropdown.js');
+    let mod = require(testedFile);
     mod = typeof mod === 'function' ? mod(global) : mod;
     mod._test = loadInternals();
 
@@ -444,9 +445,9 @@ test('dtCompat.isV2 returns true when version >=2 and null when missing', () => 
         };
     }, {virtual: true});
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const pluginModule4 = require('../src/datatables-filterdropdown.js');
+    const pluginModule4 = require(testedFile);
 
     mod = typeof pluginModule4 === 'function' ? pluginModule4(global) : pluginModule4;
     mod._test = loadInternals();

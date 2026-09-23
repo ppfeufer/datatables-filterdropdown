@@ -3,8 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const Module = require('module');
+const {testedFile} = require('./helpers/test-helpers');
 
-const SRC = path.resolve(__dirname, '../src/datatables-filterdropdown.js');
+const SRC = path.resolve(__dirname, testedFile);
 
 function compileVariant (srcText, filename) {
     'use strict';
@@ -46,7 +47,7 @@ test('coverage: execute browser-branch (factory called with window.DataTable)', 
                     handlers[ev].push(h);
                 },
                 trigger: (ev, ...a) => {
-                    (handlers[ev] || []).forEach(h => h(...a));
+                    (handlers[ev] || []).forEach((h) => h(...a));
                 }
             };
         }
@@ -67,8 +68,8 @@ test('coverage: execute browser-branch (factory called with window.DataTable)', 
 
     // Now require the module normally with a simulated browser global so the
     // UMD wrapper will choose the browser path and call factory(window,...)
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-    const pluginModule = require('../src/datatables-filterdropdown.js');
+    delete require.cache[require.resolve(testedFile)];
+    const pluginModule = require(testedFile);
     const mod = typeof pluginModule === 'function' ? pluginModule(global) : pluginModule;
 
     expect(global.DataTable).toBeDefined();
@@ -85,7 +86,7 @@ test('coverage: run dtCompat permutations to hit branches', () => {
     global.DataTable = {
         Api: function (s) {
             this.settings = s;
-        }, version: '3.0.0', util: {escapeRegex: s => s}
+        }, version: '3.0.0', util: {escapeRegex: (s) => s}
     };
     delete require.cache[SRC];
     compileVariant(orig, SRC);
@@ -97,7 +98,7 @@ test('coverage: run dtCompat permutations to hit branches', () => {
             dataTable: {
                 Api: function (s) {
                     this.settings = s;
-                }, version: '2.5.0', util: {escapeRegex: s => s}
+                }, version: '2.5.0', util: {escapeRegex: (s) => s}
             }
         }
     };
