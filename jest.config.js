@@ -21,7 +21,8 @@ export default defineConfig({
         '<rootDir>/tests/*.tests.js'
     ],
     testPathIgnorePatterns: [
-        '<rootDir>/tests/helpers/'
+        '<rootDir>/tests/helpers/',
+        '\\.min\\.js$'
     ],
     verbose: true
 });
