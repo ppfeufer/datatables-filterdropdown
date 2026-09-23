@@ -20,4 +20,4 @@ CODEOWNERS export-ignore
 datatables-filterdropdown export-ignore
 src export-ignore
 coverage export-ignore
-__tests__ export-ignore
+tests export-ignore
