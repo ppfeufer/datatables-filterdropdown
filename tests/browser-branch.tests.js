@@ -3,6 +3,7 @@
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
+const {testedFile} = require('./helpers/test-helpers');
 
 describe('Browser global branch', () => {
     'use strict';
@@ -12,7 +13,7 @@ describe('Browser global branch', () => {
     });
 
     it('invokes factory in browser mode and attaches to window.DataTable', () => {
-        const srcPath = path.resolve(__dirname, '../src/datatables-filterdropdown.js');
+        const srcPath = path.resolve(__dirname, testedFile);
         const src = fs.readFileSync(srcPath, 'utf8');
 
         // Prepare a browser-like sandbox where define and exports are absent

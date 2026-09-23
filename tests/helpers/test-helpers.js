@@ -1,9 +1,11 @@
 /* global process */
 
+const testedFile = '../src/datatables-filterdropdown.js';
+
 const loadInternals = () => {
     'use strict';
 
-    const file = '../../src/datatables-filterdropdown.js';
+    const file = `../${testedFile}`;
 
     // Ensure module is loaded fresh under test env so it can attach _test.
     delete require.cache[require.resolve(file)];
@@ -96,4 +98,4 @@ const loadInternals = () => {
     }
 };
 
-module.exports = {loadInternals};
+module.exports = {loadInternals, testedFile};

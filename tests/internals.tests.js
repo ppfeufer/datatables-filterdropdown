@@ -2,7 +2,7 @@
 
 'use strict';
 
-const {loadInternals} = require('./helpers/test-helpers');
+const {loadInternals, testedFile} = require('./helpers/test-helpers');
 
 test('internals: parseInitArray and dtCompat basics', () => {
     process.env.NODE_ENV = 'test';
@@ -24,22 +24,26 @@ test('internals: parseInitArray and dtCompat basics', () => {
             eventHandlers[evt] = eventHandlers[evt] || [];
             eventHandlers[evt].push(h);
         }, trigger: (evt, ...a) => {
-            (eventHandlers[evt] || []).forEach(h => h(...a));
+            (eventHandlers[evt] || []).forEach((h) => h(...a));
         }
     };
 
     const makeWrapper = (nodes) => ({
         nodes,
         prepend: (html) => {
-            if (nodes[0]) nodes[0].insertAdjacentHTML('afterbegin', html);
+            if (nodes[0]) {
+                nodes[0].insertAdjacentHTML('afterbegin', html);
+            }
             return makeWrapper(nodes);
         },
         append: (html) => {
-            if (nodes[0]) nodes[0].insertAdjacentHTML('beforeend', html);
+            if (nodes[0]) {
+                nodes[0].insertAdjacentHTML('beforeend', html);
+            }
             return makeWrapper(nodes);
         },
         empty: () => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.innerHTML = '';
             });
             return makeWrapper(nodes);
@@ -50,14 +54,16 @@ test('internals: parseInitArray and dtCompat basics', () => {
         },
         html: () => nodes[0] ? nodes[0].innerHTML : '',
         val: (v) => {
-            if (v === undefined) return nodes[0] ? nodes[0].value || '' : '';
-            nodes.forEach(n => {
+            if (v === undefined) {
+                return nodes[0] ? nodes[0].value || '' : '';
+            }
+            nodes.forEach((n) => {
                 n.value = v;
             });
             return makeWrapper(nodes);
         },
         change: (handler) => {
-            nodes.forEach(n => {
+            nodes.forEach((n) => {
                 n.__change = handler;
             });
             return makeWrapper(nodes);
@@ -70,9 +76,15 @@ test('internals: parseInitArray and dtCompat basics', () => {
     });
 
     const $fn = (sel) => {
-        if (sel === document) return eventAPI;
-        if (sel && typeof sel === 'object' && typeof sel.insertAdjacentHTML === 'function') return makeWrapper([sel]);
-        if (sel && typeof sel === 'object' && Array.isArray(sel.nodes)) return sel;
+        if (sel === document) {
+            return eventAPI;
+        }
+        if (sel && typeof sel === 'object' && typeof sel.insertAdjacentHTML === 'function') {
+            return makeWrapper([sel]);
+        }
+        if (sel && typeof sel === 'object' && Array.isArray(sel.nodes)) {
+            return sel;
+        }
         if (typeof sel === 'string' && sel.startsWith('#')) {
             const el = document.getElementById(sel.slice(1));
             return makeWrapper(el ? [el] : []);
@@ -108,7 +120,7 @@ test('internals: parseInitArray and dtCompat basics', () => {
                         }
                         if (t === 'option') {
                             const valMatch = /value\s*=\s*"([^"]*)"/.exec(html);
-                            const txtMatch = />((?:.|\n)*)<\s*\/option/.exec(html);
+                            const txtMatch = />([.\n]*)<\s*\/option/.exec(html);
                             newEl.tagName = 'OPTION';
                             newEl.value = valMatch ? valMatch[1] : '';
                             newEl.text = txtMatch ? txtMatch[1] : '';
@@ -122,7 +134,9 @@ test('internals: parseInitArray and dtCompat basics', () => {
                     }
                 },
                 querySelectorAll (sel) {
-                    if (sel === 'option') return this.children.filter(c => c.tagName === 'OPTION');
+                    if (sel === 'option') {
+                        return this.children.filter((c) => c.tagName === 'OPTION');
+                    }
                     return [];
                 }
             };
@@ -134,7 +148,9 @@ test('internals: parseInitArray and dtCompat basics', () => {
 
         global.document.createElement = createElement;
         global.document.getElementById = (id) => {
-            if (elements[id]) return elements[id];
+            if (elements[id]) {
+                return elements[id];
+            }
             for (let i = 0; i < allElements.length; i++) {
                 if (allElements[i].id === id) {
                     elements[id] = allElements[i];
@@ -155,8 +171,8 @@ test('internals: parseInitArray and dtCompat basics', () => {
 
     // use shared loadInternals helper from tests/test-helpers.js
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-    const pluginModule = require('../src/datatables-filterdropdown.js');
+    delete require.cache[require.resolve(testedFile)];
+    const pluginModule = require(testedFile);
     const mod = typeof pluginModule === 'function' ? pluginModule(global) : pluginModule;
     mod._test = loadInternals();
 
@@ -192,8 +208,8 @@ test('internals: _apiFromSettingsCached returns cached API instance', () => {
         }, version: '3.0.0'
     };
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-    const pluginModule = require('../src/datatables-filterdropdown.js');
+    delete require.cache[require.resolve(testedFile)];
+    const pluginModule = require(testedFile);
     const mod = typeof pluginModule === 'function' ? pluginModule(global) : pluginModule;
     mod._test = loadInternals();
     const {_apiFromSettingsCached} = mod._test;
@@ -207,8 +223,8 @@ test('internals: _apiFromSettingsCached returns cached API instance', () => {
 
 test('internals: setSelectFromColumnSearch matches existing option and appends missing option', () => {
     process.env.NODE_ENV = 'test';
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-    const pluginModule2 = require('../src/datatables-filterdropdown.js');
+    delete require.cache[require.resolve(testedFile)];
+    const pluginModule2 = require(testedFile);
     const mod = typeof pluginModule2 === 'function' ? pluginModule2(global) : pluginModule2;
     mod._test = loadInternals();
     const {setSelectFromColumnSearch} = mod._test;
@@ -237,14 +253,14 @@ test('internals: setSelectFromColumnSearch matches existing option and appends m
 
     // after calling, the missing option should be appended
     const opts = sel2.querySelectorAll('option');
-    const foundMissing = opts.some(o => o.value === 'missing');
+    const foundMissing = Array.from(opts).some((o) => o.value === 'missing');
     expect(foundMissing).toBe(true);
 });
 
 test('internals: initSelectForColumn attaches change handler that calls column.search and draw', () => {
     process.env.NODE_ENV = 'test';
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-    const pluginModule3 = require('../src/datatables-filterdropdown.js');
+    delete require.cache[require.resolve(testedFile)];
+    const pluginModule3 = require(testedFile);
     const mod = typeof pluginModule3 === 'function' ? pluginModule3(global) : pluginModule3;
     mod._test = loadInternals();
     const {initSelectForColumn} = mod._test;
@@ -275,13 +291,16 @@ test('internals: initSelectForColumn attaches change handler that calls column.s
         }
     };
 
-    const selWrapper = initSelectForColumn(tableId, column);
+    // call initSelectForColumn to attach change handler
+    initSelectForColumn(tableId, column);
 
     // simulate user selecting 'X' and triggering change
     const domSel = document.getElementById(selectId);
     if (domSel) {
         domSel.value = 'X';
-        if (typeof domSel.__change === 'function') domSel.__change();
+        if (typeof domSel.__change === 'function') {
+            domSel.__change();
+        }
     }
 
     expect(drew).toBe(true);

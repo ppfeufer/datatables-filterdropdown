@@ -1,5 +1,7 @@
 /* global test, expect, process */
 
+const {testedFile} = require('./helpers/test-helpers');
+
 // This test triggers many early-return branches in the event handlers and
 // dtCompat helpers by re-requiring the module under controlled global
 // environments and invoking the captured handlers directly.
@@ -40,9 +42,9 @@ function requirePluginWithFakeJQuery () {
     };
 
     // Ensure we load a fresh copy of the plugin
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const plugin = require('../src/datatables-filterdropdown.js');
+    const plugin = require(testedFile);
     const mod = typeof plugin === 'function' ? plugin(global) : plugin;
 
     return {mod, handlers};
@@ -88,8 +90,8 @@ test('coverage-more: dtCompat fallback and version branches', () => {
                 }
             }
         };
-        delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
-        const plugin = require('../src/datatables-filterdropdown.js');
+        delete require.cache[require.resolve(testedFile)];
+        const plugin = require(testedFile);
         const mod = typeof plugin === 'function' ? plugin(global) : plugin;
         dtc = mod._test.dtCompat;
     }
@@ -117,7 +119,7 @@ test('coverage-more: dtCompat with global DataTable (util and version)', () => {
             constructor (s) {
                 this.settings = s;
             }
-        }, util: {escapeRegex: s => `X${s}`}, version: '2.1.0'
+        }, util: {escapeRegex: (s) => `X${s}`}, version: '2.1.0'
     };
 
     // Provide a minimal jQuery/$ stub so the plugin can attach event handlers
@@ -150,9 +152,9 @@ test('coverage-more: dtCompat with global DataTable (util and version)', () => {
 
     process.env.NODE_ENV = 'test';
 
-    delete require.cache[require.resolve('../src/datatables-filterdropdown.js')];
+    delete require.cache[require.resolve(testedFile)];
 
-    const plugin = require('../src/datatables-filterdropdown.js');
+    const plugin = require(testedFile);
     const mod = typeof plugin === 'function' ? plugin(global) : plugin;
     const dtc = mod._test.dtCompat;
 
