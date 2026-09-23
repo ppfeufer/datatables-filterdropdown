@@ -54,6 +54,11 @@ Section Order:
 - Build script to generate the distribution files
 - Jest test suite
 
+### Fixed
+
+- `bootstrap` option was not working as expected, now it is properly disabling the
+  Bootstrap styling when set to `false`
+
 ## [0.0.4] - 2026-09-15
 
 ### Added
