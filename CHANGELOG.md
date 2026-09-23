@@ -50,6 +50,7 @@ Section Order:
 
 ### Added
 
+- Additional CSS classes option to allow for more customization of the dropdowns
 - Build script to generate the distribution files
 - Jest test suite
 
