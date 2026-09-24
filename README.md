@@ -74,14 +74,17 @@ Dropdown Filter in action:
                 // 3rd column (index 2) and 4th column (index 3) will get a filter element
                 columns: [
                     {
-                        idx: 2,
+                        idx: 2, // Index of the column to filter by, starting at 0 for the first column
                         labelDropdownAll: 'All Offices', // Option to override the default "All"
                         title: 'Office' // This will be the title of the select element. If not provided, the header text of the respective column will be used
                     },
+                    // This has all the possible options to showcase them.
                     {
-                        idx: 3,
+                        idx: 3, // Index of the column to filter by, starting at 0 for the first column
+                        cssClasses: 'custom-class', // Optional, default is null. The CSS classes will be added to the wrapper div of the select element
                         labelDropdownAll: 'All Positions', // Option to override the default "All"
-                        title: 'Position' // This will be the title of the select element. If not provided, the header text of the respective column will be used
+                        title: 'Position', // This will be the title of the select element. If not provided, the header text of the respective column will be used
+                        maxWidth: '5em' // Optional, default is null. CSS value to assigned to max-width. Use "null" to turn off automatic max-width or specify a custom width, e.g. "5em"
                     }
                 ]
             }
@@ -177,7 +180,7 @@ All configuration options must be set in the `filterDropDown` section of the ini
 | labelFilter                | string | No, but recommended | `"Filter by"`                                       | Text displayed at the beginning of the filter row. This option can be useful if the label should be shown in other languages.                                              |
 | ajax                       | string | No                  | `null`                                              | URL to server endpoint for server-side processing. Enabled by providing a value.                                                                                           |
 | columns                    | array  | Yes                 |                                                     | Array of definitions, one for each column that gets a filter element.                                                                                                      |
-| columns[].cssClasses       | string | No                  |                                                     | CSS classes to be added to the select elements wrapper div for the respective column.                                                                                      |
+| columns[].cssClasses       | string | No                  | `null`                                              | CSS classes to be added to the select elements wrapper div for the respective column.                                                                                      |
 | columns[].idx              | number | Yes                 |                                                     | Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array.                                                             |
 | columns[].labelDropdownAll | string | No, but recommended | `"All"`                                             | Text displayed for the "All" option in the dropdown.                                                                                                                       |
 | columns[].maxWidth         | string | No                  | `null`                                              | CSS value to assigned to max-width. Use `"null"` to turn off automatic max-width or specify a custom width, e.g. `"5em"`.                                                  |

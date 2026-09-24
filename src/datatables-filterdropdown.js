@@ -457,7 +457,12 @@
             $(`#${filterWrapperId}`).append(selectMarkup);
 
             // Initializing select for current column and applying event to react to changes
-            $(`#${selectId}`).empty().append(`<option value="">${filterDef.columns[colIndex].labelDropdownAll}</option>`);
+            const select = $(`#${selectId}`).empty().append(`<option value="">${filterDef.columns[colIndex].labelDropdownAll}</option>`);
+
+            // Apply max-width CSS if defined in the column definition
+            if (filterDef.columns[colIndex].maxWidth !== null) {
+                select.css('max-width', filterDef.columns[colIndex].maxWidth);
+            }
         });
     });
 

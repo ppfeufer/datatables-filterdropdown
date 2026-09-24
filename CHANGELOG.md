@@ -48,6 +48,11 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Fixed
+
+- `maxWidth` option was not working as expected, now it is properly limiting the
+  width of the dropdowns when set to a value
+
 ## [0.0.5] - 2026-09-23
 
 ### Added
