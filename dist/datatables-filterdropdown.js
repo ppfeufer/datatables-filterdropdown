@@ -1,7 +1,7 @@
 /*!
  * DataTables - filterDropDown plugin (modernized fork by Peter Pfeufer)
  *
- * @version 0.0.5
+ * @version 0.0.6
  * @author Peter Pfeufer
  * @license GPL-3.0 or later
  * @link https://github.com/ppfeufer/datatables-filterdropdown
@@ -68,7 +68,7 @@
 })((window, document, DataTable) => { // jshint ignore:line
     'use strict';
 
-    const version = '0.0.5';
+    const version = '0.0.6';
 
     /**
      * Default settings for the filterDropDown plugin.
@@ -455,7 +455,12 @@
             $(`#${filterWrapperId}`).append(selectMarkup);
 
             // Initializing select for current column and applying event to react to changes
-            $(`#${selectId}`).empty().append(`<option value="">${filterDef.columns[colIndex].labelDropdownAll}</option>`);
+            const select = $(`#${selectId}`).empty().append(`<option value="">${filterDef.columns[colIndex].labelDropdownAll}</option>`);
+
+            // Apply max-width CSS if defined in the column definition
+            if (filterDef.columns[colIndex].maxWidth !== null) {
+                select.css('max-width', filterDef.columns[colIndex].maxWidth);
+            }
         });
     });
 
