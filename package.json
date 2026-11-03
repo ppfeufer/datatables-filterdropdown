@@ -27,7 +27,7 @@
         "eslint": "^10.14.0",
         "ev-emitter": "^2.1.2",
         "get-size": "^3.0.0",
-        "globals": "^17.13.0",
+        "globals": "^17.14.0",
         "jest": "^30.5.2",
         "jquery": "^4.0.0",
         "jquery-bridget": "^3.0.1",

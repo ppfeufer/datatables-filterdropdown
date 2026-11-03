@@ -15,7 +15,7 @@ ci:
 
     for more information, see https://pre-commit.ci
   autofix_prs: false
-  autoupdate_branch: 'master'
+  autoupdate_branch: ''
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
   autoupdate_schedule: monthly
   skip:
@@ -93,7 +93,7 @@ repos:
         description: This hook ensures that files end with a newline.
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: eb9cff43594f41e8fc47ce8d1964a4500f26493c  # frozen: v10.8.0
+    rev: 28bccd32cd8c825b0d0913b486f8ef0f56bfb08a  # frozen: v10.14.0
     hooks:
       - id: eslint
         name: ESLint
@@ -101,29 +101,29 @@ repos:
         language: node
         additional_dependencies:
           # eslint itself needs to be here when using additional_dependencies.
-          - eslint@10.8.0 # https://github.com/eslint/eslint/releases/latest
-          - globals@17.8.0  # https://github.com/sindresorhus/globals/releases/latest
+          - eslint@10.14.0 # https://github.com/eslint/eslint/releases/latest
+          - globals@17.14.0 # https://github.com/sindresorhus/globals/releases/latest
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3aa28ce11a84d747c5695ad10b81945f2400b54f  # frozen: 3.8.0
+    rev: e8b4e28241a9ae8296ba6e4a491b5da4eda73283  # frozen: 3.11.1
     hooks:
       - id: editorconfig-checker
         name: EditorConfig Checker
-        description: This hook checks for compliance with definitions made in EditorConfig files.
+        description: Check for compliance with the definitions in the EditorConfig file.
 
   - repo: https://github.com/executablebooks/mdformat
     rev: 2d496dbc18e31b83a1596685347ffe0b6041daf0  # frozen: 1.0.0
     hooks:
       - id: mdformat
         name: Mdformat
-        description: This hook checks for Markdown formatting issues.
-        additional_dependencies:  # https://mdformat.readthedocs.io/en/stable/users/plugins.html#code-formatter-plugins
+        description: Format Markdown files.
+        additional_dependencies:
           - mdformat-gfm==1.0.0  # Mdformat plugin for GitHub Flavored Markdown compatibility » https://github.com/hukkin/mdformat-gfm/tags
           - mdformat-toc==0.5.0  # Mdformat plugin to generate a table of contents » https://github.com/hukkin/mdformat-toc/tags
           - mdformat-shfmt==0.2.0  # Mdformat plugin to format shell code blocks » https://github.com/hukkin/mdformat-shfmt/tags
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 1a4bb160cab6417b3045e1b37b6b72449243e658  # frozen: 0.37.4
+    rev: 39478bf2c099a58683d3f1aedf675105318b078d  # frozen: 0.39.0
     hooks:
       - id: check-github-actions
         name: Check GitHub Actions
