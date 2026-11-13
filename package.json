@@ -32,7 +32,7 @@
         "jquery": "^4.0.0",
         "jquery-bridget": "^3.0.1",
         "outlayer": "^2.1.1",
-        "terser": "^5.48.0"
+        "terser": "^5.51.2"
     },
     "scripts": {
         "copy:js": "mkdir -p dist && cp src/datatables-filterdropdown.js dist/datatables-filterdropdown.js",
