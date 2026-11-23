@@ -48,6 +48,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Added
+
+- Load guard to prevent the extension from being loaded multiple times
+
 ## [0.0.6] - 2026-09-24
 
 ### Fixed
