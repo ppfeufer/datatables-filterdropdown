@@ -28,6 +28,26 @@ const fileName = 'datatables-filterdropdown.js';
 const DEFAULT_SOURCE = path.resolve(projectRoot, 'src', fileName);
 const DEFAULT_DESTINATION = path.resolve(projectRoot, 'dist', fileName);
 
+const loadGuardOpen = `((globalObject) => {
+    'use strict';
+
+    if (globalObject.__ppfeuferDataTablesFilterDropdownLoaded__) {
+        console.warn('DataTables FilterDropdown already loaded. Skipping duplicate load.');
+
+        return;
+    }
+
+    Object.defineProperty(globalObject, '__ppfeuferDataTablesFilterDropdownLoaded__', {
+        configurable: false,
+        enumerable: false,
+        value: true,
+        writable: false
+    });
+
+`;
+const loadGuardClose = `})(typeof globalThis !== 'undefined' ? globalThis : window);
+`;
+
 (async () => {
     try {
         const src = process.argv[2] ? path.resolve(process.argv[2]) : DEFAULT_SOURCE;
@@ -35,26 +55,26 @@ const DEFAULT_DESTINATION = path.resolve(projectRoot, 'dist', fileName);
 
         console.log(`Building: ${src} -> ${dest}`);
 
-        let content = await fs.readFile(src, 'utf8');
+        let sourceFileContent = await fs.readFile(src, 'utf8');
 
         // Normalize line endings to \n for consistent processing
-        content = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        sourceFileContent = sourceFileContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
         // Remove the test-only block between the markers (inclusive).
         // Use a token search that is robust to indentation and minor variations.
         const startToken = 'START TEST ONLY';
         const endToken = 'END TEST ONLY';
-        const startPos = content.indexOf(startToken);
-        const endPos = content.indexOf(endToken, startPos !== -1 ? startPos : 0);
+        const startPos = sourceFileContent.indexOf(startToken);
+        const endPos = sourceFileContent.indexOf(endToken, startPos !== -1 ? startPos : 0);
 
         if (startPos !== -1 && endPos !== -1) {
             // Find the start of the line that contains the start token
-            const lineStart = content.lastIndexOf('\n', startPos) + 1;
+            const lineStart = sourceFileContent.lastIndexOf('\n', startPos) + 1;
             // Find the end of the line that contains the end token
-            const lineEndIdx = content.indexOf('\n', endPos);
-            const lineEnd = lineEndIdx === -1 ? content.length : lineEndIdx + 1;
+            const lineEndIdx = sourceFileContent.indexOf('\n', endPos);
+            const lineEnd = lineEndIdx === -1 ? sourceFileContent.length : lineEndIdx + 1;
 
-            content = content.slice(0, lineStart) + content.slice(lineEnd);
+            sourceFileContent = sourceFileContent.slice(0, lineStart) + sourceFileContent.slice(lineEnd);
 
             console.log('Removed test-only block.');
         } else {
@@ -64,7 +84,7 @@ const DEFAULT_DESTINATION = path.resolve(projectRoot, 'dist', fileName);
         // Remove any standalone istanbul ignore comments (these should not
         // appear in production builds). Remove the entire line (including the
         // trailing newline) so we don't leave empty lines behind.
-        content = content.replace(/^[ \t]*\/\/\s*istanbul ignore next\s*(?:\r?\n|$)/gm, '');
+        sourceFileContent = sourceFileContent.replace(/^[ \t]*\/\/\s*istanbul ignore next\s*(?:\r?\n|$)/gm, '');
 
         // Collapse multiple consecutive empty lines (including lines with only spaces/tabs)
         // into a single empty line. We treat an "empty line" as a blank line between
@@ -75,12 +95,22 @@ const DEFAULT_DESTINATION = path.resolve(projectRoot, 'dist', fileName);
         // (optional spaces/tabs then newline). This ensures we only consume
         // truly blank lines (those that end with a newline) and never eat the
         // leading spaces of the next non-empty line.
-        content = content.replace(/\n(?:[ \t]*\n){1,}/g, '\n\n');
+        sourceFileContent = sourceFileContent.replace(/\n(?:[ \t]*\n){1,}/g, '\n\n');
 
         // Ensure there is no empty line immediately before the final closing `});`.
         // Collapse any blank lines that occur directly before the last `});`
         // so the file ends with the previous statement, a single newline, then `});`.
-        content = content.replace(/\n(?:[ \t]*\n)+([ \t]*}\);[ \t]*\n?)$/, '\n$1');
+        sourceFileContent = sourceFileContent.replace(/\n(?:[ \t]*\n)+([ \t]*}\);[ \t]*\n?)$/, '\n$1');
+
+        const factoryStart = sourceFileContent.indexOf('// UMD / module wrapper: support ESM, CommonJS and browser globals');
+
+        if (factoryStart === -1) {
+            throw new Error('Could not find the factory comment in the source file.');
+        }
+
+        sourceFileContent = `${sourceFileContent.slice(0, factoryStart)}${loadGuardOpen}${sourceFileContent.slice(factoryStart)}`;
+
+        const content = `${sourceFileContent}${loadGuardClose}`;
 
         // Ensure destination directory exists
         await fs.mkdir(path.dirname(dest), {recursive: true});
